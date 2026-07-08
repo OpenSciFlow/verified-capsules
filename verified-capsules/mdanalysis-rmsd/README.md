@@ -17,7 +17,7 @@ Recorded local evidence:
 
 Recorded multi-environment evidence:
 
-- GitHub Actions Ubuntu run: https://github.com/OpenSciFlow/verified-capsules/actions/runs/28941403846
+- GitHub Actions Ubuntu workflow: https://github.com/OpenSciFlow/verified-capsules/actions/workflows/mdanalysis-rmsd-example.yml
 - Artifact: `mdanalysis-rmsd-github-actions-ubuntu`
 
 This R6 claim is narrow. It does not validate scientific correctness beyond the tiny example, and it does not claim HPC, GPU, container, or large-trajectory portability. It only demonstrates the check-before-run and record-after-run contract across one local Windows host and one GitHub Actions Ubuntu runner.
