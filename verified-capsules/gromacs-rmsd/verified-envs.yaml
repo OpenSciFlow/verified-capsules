@@ -6,18 +6,29 @@ matrix:
     os: "linux"
     container: null
     scheduler: null
-    gromacs_version: "2024.x"
+    tool_version: "GROMACS 2024.x"
     cuda: null
     status: "untested"
     readiness_contribution: null
     evidence: null
     notes: "Skeleton row only. No smoke test has been run."
+  - environment_id: "local-windows-no-gmx"
+    environment_type: "local-shell"
+    os: "Windows"
+    container: null
+    scheduler: null
+    tool_version: null
+    cuda: null
+    status: "blocked"
+    readiness_contribution: null
+    evidence: "run-records/blocked-local-windows-no-gmx.json"
+    notes: "Smoke-test attempt blocked because gmx was not available on PATH."
   - environment_id: "apptainer-linux-gromacs-2024"
     environment_type: "apptainer"
     os: "linux"
     container: "apptainer.def"
     scheduler: null
-    gromacs_version: "2024.x"
+    tool_version: "GROMACS 2024.x"
     cuda: null
     status: "untested"
     readiness_contribution: null

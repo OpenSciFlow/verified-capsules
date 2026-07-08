@@ -1,6 +1,7 @@
 __pycache__/
 .pytest_cache/
 .venv*/
+.conda*/
 *.pyc
 run-records/*.log
 run-records/*.tmp

@@ -18,7 +18,11 @@
           "os": { "type": ["string", "null"] },
           "container": { "type": ["string", "null"] },
           "scheduler": { "type": ["string", "null"] },
-          "gromacs_version": { "type": ["string", "null"] },
+          "tool_version": { "type": ["string", "null"] },
+          "gromacs_version": {
+            "type": ["string", "null"],
+            "description": "Deprecated compatibility field; use tool_version."
+          },
           "cuda": { "type": ["string", "null"] },
           "status": {
             "type": "string",

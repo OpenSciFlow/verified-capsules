@@ -33,8 +33,8 @@ A verified execution capsule should contain:
 
 | Capsule | Status | Readiness | Notes |
 |---|---|---:|---|
-| `mdanalysis-rmsd` | Example run recorded | R5 | Tiny MDAnalysis RMSD smoke/example run with output CSV and run record. No cross-environment claim. |
-| `gromacs-rmsd` | Skeleton | R3 draft target | Environment spec and reviewed command-template draft exist. No smoke-test evidence is claimed yet. |
+| `mdanalysis-rmsd` | Example runs recorded | R5 | Tiny MDAnalysis RMSD smoke/example runs in local venv and local Conda environments. No R6 cross-environment claim. |
+| `gromacs-rmsd` | Skeleton with blocked local check | R3 draft target | Environment spec and reviewed command-template draft exist. A local Windows smoke-test attempt is blocked because `gmx` is not on PATH. No R4 evidence is claimed. |
 
 ## Readiness Boundary
 
@@ -58,6 +58,14 @@ python scripts/validate_capsule.py verified-capsules/gromacs-rmsd
 python scripts/validate_capsule.py verified-capsules/mdanalysis-rmsd
 ```
 
+Or use the thin helper:
+
+```bash
+python scripts/opensciflow_capsule.py validate verified-capsules/mdanalysis-rmsd
+python scripts/opensciflow_capsule.py summary verified-capsules/mdanalysis-rmsd
+python scripts/opensciflow_capsule.py smoke verified-capsules/mdanalysis-rmsd
+```
+
 Summarize environment evidence:
 
 ```bash
@@ -76,6 +84,8 @@ python verified-capsules/mdanalysis-rmsd/scripts/run_mdanalysis_rmsd.py \
   --run-record verified-capsules/mdanalysis-rmsd/run-records/r5-local-windows-python313-mdanalysis210.json \
   --run-id r5-local-windows-python313-mdanalysis210
 ```
+
+The same tiny example has also been rerun in a local Conda environment on Windows and recorded as `r5-local-windows-conda-python313-mdanalysis210.json`. This is useful replication evidence, but it is not R6.
 
 ## What This Is Not
 

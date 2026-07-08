@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "blocked-local-windows-no-gmx",
+  "capsule_id": "gromacs-rmsd",
+  "status": "blocked",
+  "started_at": "2026-07-08T12:00:00Z",
+  "finished_at": "2026-07-08T12:00:00Z",
+  "command_template_id": "gromacs-version-check",
+  "rendered_command": "gmx --version",
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "shell": "PowerShell",
+    "tool_available_on_path": false
+  },
+  "inputs": [],
+  "outputs": [],
+  "return_code": null,
+  "logs": [
+    {
+      "level": "error",
+      "message": "gmx was not recognized as a command on PATH."
+    }
+  ],
+  "hashes": [],
+  "known_failure_matches": [
+    "gmx-missing"
+  ],
+  "limitations": [
+    "This is a blocked readiness check, not a GROMACS execution.",
+    "No R4 smoke-test evidence is claimed."
+  ]
+}
