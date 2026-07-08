@@ -1,6 +1,11 @@
 # Run Records
 
-No successful run records are included yet.
+No successful RMSD example-run records are included yet.
+
+The `gromacs-rmsd-smoke` workflow uploads a successful R4 smoke run record as an artifact:
+
+- workflow: https://github.com/OpenSciFlow/verified-capsules/actions/workflows/gromacs-rmsd-smoke.yml
+- artifact name: `gromacs-rmsd-smoke-github-actions-ubuntu`
 
 `blocked-local-windows-no-gmx.json` records a local smoke-test readiness block where `gmx --version` could not run because GROMACS was not available on PATH.
 

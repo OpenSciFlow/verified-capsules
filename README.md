@@ -34,7 +34,7 @@ A verified execution capsule should contain:
 | Capsule | Status | Readiness | Notes |
 |---|---|---:|---|
 | `mdanalysis-rmsd` | Multi-environment example runs recorded | R6 | Tiny MDAnalysis RMSD smoke/example runs in local Windows venv, local Windows Conda, and GitHub Actions Ubuntu. R6 applies only to the tiny example. |
-| `gromacs-rmsd` | Skeleton with blocked local check | R3 draft target | Environment spec and reviewed command-template draft exist. A local Windows smoke-test attempt is blocked because `gmx` is not on PATH. No R4 evidence is claimed. |
+| `gromacs-rmsd` | Smoke-tested | R4 | `gmx --version` passes on GitHub Actions Ubuntu. Local Windows remains blocked because `gmx` is not on PATH. No R5 RMSD example run is claimed. |
 
 ## Readiness Boundary
 
@@ -89,7 +89,7 @@ The same tiny example has also been rerun in a local Conda environment on Window
 
 The `mdanalysis-rmsd-example` GitHub Actions workflow runs the same tiny example on Ubuntu and uploads the generated CSV and run record as CI artifacts. The successful run is recorded in `verified-envs.yaml` as narrow R6 evidence.
 
-The `gromacs-rmsd-smoke` workflow attempts the next evidence step for GROMACS: install GROMACS on GitHub Actions Ubuntu, run `gmx --version`, validate a smoke run record, and upload it as an artifact. Do not count this as R4 until the workflow URL is recorded in `verified-envs.yaml`.
+The `gromacs-rmsd-smoke` workflow installs GROMACS on GitHub Actions Ubuntu, runs `gmx --version`, validates a smoke run record, and uploads it as an artifact. This is recorded as R4 evidence in `verified-envs.yaml`.
 
 ## What This Is Not
 

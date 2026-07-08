@@ -2,16 +2,16 @@ schema_version: "0.1.0"
 capsule_id: "gromacs-rmsd"
 matrix:
   - environment_id: "local-conda-linux-gromacs-2024"
-    environment_type: "local-conda"
-    os: "linux"
+    environment_type: "github-actions"
+    os: "Ubuntu"
     container: null
-    scheduler: null
-    tool_version: "GROMACS 2024.x"
+    scheduler: "github-actions"
+    tool_version: "GROMACS package from Ubuntu apt repository"
     cuda: null
-    status: "untested"
-    readiness_contribution: null
-    evidence: null
-    notes: "Skeleton row only. No smoke test has been run."
+    status: "passed"
+    readiness_contribution: "R4"
+    evidence: "https://github.com/OpenSciFlow/verified-capsules/actions/workflows/gromacs-rmsd-smoke.yml"
+    notes: "GitHub Actions Ubuntu smoke workflow passed `gmx --version` and uploaded artifact gromacs-rmsd-smoke-github-actions-ubuntu. This is R4 smoke evidence only; no RMSD example run is claimed."
   - environment_id: "local-windows-no-gmx"
     environment_type: "local-shell"
     os: "Windows"
