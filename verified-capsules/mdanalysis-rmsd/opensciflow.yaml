@@ -2,14 +2,14 @@ schema_version: "0.1.0"
 capsule_id: "mdanalysis-rmsd"
 name: "MDAnalysis RMSD analysis capsule"
 status: "verified"
-declared_readiness: "R5"
-verification_status: "example-run-recorded"
+declared_readiness: "R6"
+verification_status: "multi-env-verified"
 scope: "Compute RMSD from a small trajectory-like PDB input using MDAnalysis."
 
 tool:
   name: "MDAnalysis"
   upstream_url: "https://www.mdanalysis.org/"
-  version_constraint: "2.10.0 verified in the local Windows smoke/example run"
+  version_constraint: "2.10.0 verified in local Windows and GitHub Actions Ubuntu smoke/example runs"
 
 inputs:
   - name: "trajectory_pdb"
@@ -95,6 +95,6 @@ citation:
   url: "https://www.mdanalysis.org/pages/citations/"
 
 limitations:
-  - "This R5 evidence covers only the included tiny local Windows example run."
-  - "No cross-environment verification is claimed."
+  - "This R6 evidence covers only the included tiny example run across local Windows and GitHub Actions Ubuntu."
+  - "No HPC, GPU, container, or large-trajectory verification is claimed."
   - "The tiny synthetic input is for execution verification, not scientific interpretation."

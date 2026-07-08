@@ -33,7 +33,7 @@ A verified execution capsule should contain:
 
 | Capsule | Status | Readiness | Notes |
 |---|---|---:|---|
-| `mdanalysis-rmsd` | Example runs recorded | R5 | Tiny MDAnalysis RMSD smoke/example runs in local venv and local Conda environments. No R6 cross-environment claim. |
+| `mdanalysis-rmsd` | Multi-environment example runs recorded | R6 | Tiny MDAnalysis RMSD smoke/example runs in local Windows venv, local Windows Conda, and GitHub Actions Ubuntu. R6 applies only to the tiny example. |
 | `gromacs-rmsd` | Skeleton with blocked local check | R3 draft target | Environment spec and reviewed command-template draft exist. A local Windows smoke-test attempt is blocked because `gmx` is not on PATH. No R4 evidence is claimed. |
 
 ## Readiness Boundary
@@ -85,9 +85,9 @@ python verified-capsules/mdanalysis-rmsd/scripts/run_mdanalysis_rmsd.py \
   --run-id r5-local-windows-python313-mdanalysis210
 ```
 
-The same tiny example has also been rerun in a local Conda environment on Windows and recorded as `r5-local-windows-conda-python313-mdanalysis210.json`. This is useful replication evidence, but it is not R6.
+The same tiny example has also been rerun in a local Conda environment on Windows and recorded as `r5-local-windows-conda-python313-mdanalysis210.json`.
 
-The `mdanalysis-rmsd-example` GitHub Actions workflow runs the same tiny example on Ubuntu and uploads the generated CSV and run record as CI artifacts. Do not count that as R6 until the workflow run URL is recorded in `verified-envs.yaml`.
+The `mdanalysis-rmsd-example` GitHub Actions workflow runs the same tiny example on Ubuntu and uploads the generated CSV and run record as CI artifacts. The successful run is recorded in `verified-envs.yaml` as narrow R6 evidence.
 
 ## What This Is Not
 
