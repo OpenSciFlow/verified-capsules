@@ -15,6 +15,11 @@ Core principle:
 - `scripts/`: local validation helpers.
 - `docs/`: design notes for capsule structure, safety, readiness, and agent integration.
 
+Start here:
+
+- `docs/product-quickstart.md`
+- `docs/release-checklist.md`
+
 ## What A Capsule Contains
 
 A verified execution capsule should contain:
@@ -34,7 +39,7 @@ A verified execution capsule should contain:
 | Capsule | Status | Readiness | Notes |
 |---|---|---:|---|
 | `mdanalysis-rmsd` | Multi-environment example runs recorded | R6 | Tiny MDAnalysis RMSD smoke/example runs in local Windows venv, local Windows Conda, and GitHub Actions Ubuntu. R6 applies only to the tiny example. |
-| `gromacs-rmsd` | Smoke-tested | R4 | `gmx --version` passes on GitHub Actions Ubuntu. Local Windows remains blocked because `gmx` is not on PATH. No R5 RMSD example run is claimed. |
+| `gromacs-rmsd` | Example run recorded | R5 | Tiny `gmx rms` example passes on GitHub Actions Ubuntu through a reviewed wrapper. Local Windows remains blocked because `gmx` is not on PATH. No R6 claim. |
 
 ## Readiness Boundary
 
@@ -48,29 +53,27 @@ A verified execution capsule should contain:
 Install the small validation dependencies:
 
 ```bash
-python -m pip install jsonschema pyyaml
+python -m pip install -e .
 ```
 
 Validate capsule skeletons and recorded examples:
 
 ```bash
-python scripts/validate_capsule.py verified-capsules/gromacs-rmsd
-python scripts/validate_capsule.py verified-capsules/mdanalysis-rmsd
-```
-
-Or use the thin helper:
-
-```bash
-python scripts/opensciflow_capsule.py validate verified-capsules/mdanalysis-rmsd
-python scripts/opensciflow_capsule.py summary verified-capsules/mdanalysis-rmsd
-python scripts/opensciflow_capsule.py smoke verified-capsules/mdanalysis-rmsd
+opensciflow-capsule validate verified-capsules/gromacs-rmsd
+opensciflow-capsule validate verified-capsules/mdanalysis-rmsd
 ```
 
 Summarize environment evidence:
 
 ```bash
-python scripts/summarize_verified_envs.py verified-capsules/gromacs-rmsd/verified-envs.yaml
-python scripts/summarize_verified_envs.py verified-capsules/mdanalysis-rmsd/verified-envs.yaml
+opensciflow-capsule summary verified-capsules/gromacs-rmsd
+opensciflow-capsule summary verified-capsules/mdanalysis-rmsd
+```
+
+The legacy script entrypoint still works:
+
+```bash
+python scripts/opensciflow_capsule_cli.py validate verified-capsules/mdanalysis-rmsd
 ```
 
 Run the MDAnalysis R5 example in a prepared environment:
@@ -90,6 +93,8 @@ The same tiny example has also been rerun in a local Conda environment on Window
 The `mdanalysis-rmsd-example` GitHub Actions workflow runs the same tiny example on Ubuntu and uploads the generated CSV and run record as CI artifacts. The successful run is recorded in `verified-envs.yaml` as narrow R6 evidence.
 
 The `gromacs-rmsd-smoke` workflow installs GROMACS on GitHub Actions Ubuntu, runs `gmx --version`, validates a smoke run record, and uploads it as an artifact. This is recorded as R4 evidence in `verified-envs.yaml`.
+
+The `gromacs-rmsd-example` workflow runs the tiny synthetic PDB example through a reviewed wrapper, validates the generated run record, and uploads the `.xvg` output and run-record artifact. This is recorded as R5 evidence in `verified-envs.yaml`.
 
 ## What This Is Not
 

@@ -1,6 +1,11 @@
 # Run Records
 
-No successful RMSD example-run records are included yet.
+No successful RMSD example-run records are committed directly yet.
+
+The `gromacs-rmsd-example` workflow uploads a successful R5 example-run record as an artifact:
+
+- workflow: https://github.com/OpenSciFlow/verified-capsules/actions/workflows/gromacs-rmsd-example.yml
+- artifact name: `gromacs-rmsd-example-github-actions-ubuntu`
 
 The `gromacs-rmsd-smoke` workflow uploads a successful R4 smoke run record as an artifact:
 

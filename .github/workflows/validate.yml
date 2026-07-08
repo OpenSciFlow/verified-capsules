@@ -12,8 +12,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: python -m pip install jsonschema pyyaml
-      - run: python scripts/opensciflow_capsule.py validate verified-capsules/gromacs-rmsd
-      - run: python scripts/opensciflow_capsule.py validate verified-capsules/mdanalysis-rmsd
-      - run: python scripts/opensciflow_capsule.py summary verified-capsules/gromacs-rmsd
-      - run: python scripts/opensciflow_capsule.py summary verified-capsules/mdanalysis-rmsd
+      - run: python -m pip install -e . pytest
+      - run: opensciflow-capsule validate verified-capsules/gromacs-rmsd
+      - run: opensciflow-capsule validate verified-capsules/mdanalysis-rmsd
+      - run: opensciflow-capsule summary verified-capsules/gromacs-rmsd
+      - run: opensciflow-capsule summary verified-capsules/mdanalysis-rmsd
+      - run: python -m pytest

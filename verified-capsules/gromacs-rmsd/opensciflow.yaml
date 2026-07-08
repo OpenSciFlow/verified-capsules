@@ -2,14 +2,14 @@ schema_version: "0.1.0"
 capsule_id: "gromacs-rmsd"
 name: "GROMACS RMSD analysis capsule"
 status: "review"
-declared_readiness: "R4"
-verification_status: "smoke-tested"
+declared_readiness: "R5"
+verification_status: "example-run-recorded"
 scope: "Compute RMSD from a prepared GROMACS structure/run-input file and trajectory."
 
 tool:
   name: "GROMACS"
   upstream_url: "https://www.gromacs.org/"
-  version_constraint: "GROMACS package smoke-tested on GitHub Actions Ubuntu; exact package version recorded in workflow artifact"
+  version_constraint: "GROMACS package example-run tested on GitHub Actions Ubuntu; exact package version recorded in workflow artifact"
 
 inputs:
   - name: "structure_or_tpr"
@@ -112,6 +112,6 @@ citation:
   url: "https://www.gromacs.org/"
 
 limitations:
-  - "This is an R4 smoke-tested capsule, not an R5 RMSD example-run capsule."
-  - "No example RMSD run record is included yet."
-  - "The R4 evidence only verifies that GROMACS can be installed and `gmx --version` can run on GitHub Actions Ubuntu."
+  - "This R5 evidence covers only the included tiny synthetic PDB example on GitHub Actions Ubuntu."
+  - "No large-trajectory, HPC, GPU, or multi-environment verification is claimed."
+  - "The reviewed wrapper uses fixed group 0 / group 0 selection for the tiny example only."

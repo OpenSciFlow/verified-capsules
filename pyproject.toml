@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "opensciflow-capsule"
+version = "0.1.0"
+description = "Small CLI for validating and inspecting OpenSciFlow verified execution capsules."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "OpenSciFlow maintainers" }
+]
+dependencies = [
+  "jsonschema>=4.0",
+  "PyYAML>=6.0"
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3"
+]
+
+[project.scripts]
+opensciflow-capsule = "opensciflow_capsule.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["opensciflow_capsule*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

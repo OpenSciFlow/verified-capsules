@@ -9,9 +9,9 @@ matrix:
     tool_version: "GROMACS package from Ubuntu apt repository"
     cuda: null
     status: "passed"
-    readiness_contribution: "R4"
-    evidence: "https://github.com/OpenSciFlow/verified-capsules/actions/workflows/gromacs-rmsd-smoke.yml"
-    notes: "GitHub Actions Ubuntu smoke workflow passed `gmx --version` and uploaded artifact gromacs-rmsd-smoke-github-actions-ubuntu. This is R4 smoke evidence only; no RMSD example run is claimed."
+    readiness_contribution: "R5"
+    evidence: "https://github.com/OpenSciFlow/verified-capsules/actions/workflows/gromacs-rmsd-example.yml"
+    notes: "GitHub Actions Ubuntu example workflow passed the tiny `gmx rms` wrapper and uploaded artifact gromacs-rmsd-example-github-actions-ubuntu. This is R5 evidence only for the tiny synthetic example."
   - environment_id: "local-windows-no-gmx"
     environment_type: "local-shell"
     os: "Windows"
