@@ -32,5 +32,5 @@ matrix:
     cuda: null
     status: "passed"
     readiness_contribution: "R6"
-    evidence: "https://github.com/OpenSciFlow/verified-capsules/actions/runs/28941192200"
+    evidence: "https://github.com/OpenSciFlow/verified-capsules/actions/runs/28941403846"
     notes: "GitHub Actions Ubuntu run passed and uploaded CSV/run-record artifact named mdanalysis-rmsd-github-actions-ubuntu. This is R6 evidence only for the tiny example."
