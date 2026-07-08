@@ -1,0 +1,109 @@
+name: gromacs-rmsd-smoke
+
+on:
+  push:
+    paths:
+      - ".github/workflows/gromacs-rmsd-smoke.yml"
+      - "scripts/**"
+      - "schemas/**"
+      - "verified-capsules/gromacs-rmsd/**"
+  pull_request:
+    paths:
+      - ".github/workflows/gromacs-rmsd-smoke.yml"
+      - "scripts/**"
+      - "schemas/**"
+      - "verified-capsules/gromacs-rmsd/**"
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install jsonschema pyyaml
+      - run: python scripts/opensciflow_capsule.py validate verified-capsules/gromacs-rmsd
+      - name: Install GROMACS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gromacs
+      - name: Run GROMACS smoke test
+        run: |
+          mkdir -p verified-capsules/gromacs-rmsd/run-records
+          set +e
+          gmx --version > verified-capsules/gromacs-rmsd/run-records/gmx-version-github-actions-ubuntu.txt 2>&1
+          code=$?
+          export GROMACS_SMOKE_RETURN_CODE=$code
+          set -e
+          cat verified-capsules/gromacs-rmsd/run-records/gmx-version-github-actions-ubuntu.txt
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import platform
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          log_path = Path("verified-capsules/gromacs-rmsd/run-records/gmx-version-github-actions-ubuntu.txt")
+          text = log_path.read_text(encoding="utf-8", errors="replace")
+          digest = hashlib.sha256(log_path.read_bytes()).hexdigest()
+          now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+          return_code = int(os.environ.get("GROMACS_SMOKE_RETURN_CODE", "1"))
+          record = {
+              "schema_version": "0.1.0",
+              "run_id": "r4-github-actions-ubuntu-gromacs-smoke",
+              "capsule_id": "gromacs-rmsd",
+              "status": "passed" if return_code == 0 else "failed",
+              "started_at": now,
+              "finished_at": now,
+              "command_template_id": "gromacs-version-check",
+              "rendered_command": "gmx --version",
+              "environment": {
+                  "os": platform.platform(),
+                  "runner": "github-actions-ubuntu-latest",
+                  "tool_version_output_first_line": text.splitlines()[0] if text.splitlines() else None,
+                  "github_run_id": os.environ.get("GITHUB_RUN_ID"),
+                  "github_sha": os.environ.get("GITHUB_SHA"),
+              },
+              "inputs": [],
+              "outputs": [
+                  {
+                      "name": "gmx_version_log",
+                      "path": str(log_path.as_posix()),
+                      "sha256": digest,
+                  }
+              ],
+              "return_code": return_code,
+              "logs": [
+                  {
+                      "level": "info" if return_code == 0 else "error",
+                      "message": text[:2000],
+                  }
+              ],
+              "hashes": [
+                  {
+                      "path": str(log_path.as_posix()),
+                      "sha256": digest,
+                  }
+              ],
+              "known_failure_matches": [] if return_code == 0 else ["gmx-missing"],
+              "limitations": [
+                  "This is a GROMACS version smoke test only.",
+                  "No RMSD input trajectory was executed.",
+                  "No R5 example run is claimed.",
+              ],
+          }
+          record_path = Path("verified-capsules/gromacs-rmsd/run-records/r4-github-actions-ubuntu-gromacs-smoke.json")
+          record_path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+          raise SystemExit(return_code)
+          PY
+      - run: python scripts/validate_run_record.py verified-capsules/gromacs-rmsd/run-records/r4-github-actions-ubuntu-gromacs-smoke.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gromacs-rmsd-smoke-github-actions-ubuntu
+          path: |
+            verified-capsules/gromacs-rmsd/run-records/gmx-version-github-actions-ubuntu.txt
+            verified-capsules/gromacs-rmsd/run-records/r4-github-actions-ubuntu-gromacs-smoke.json

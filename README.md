@@ -89,6 +89,8 @@ The same tiny example has also been rerun in a local Conda environment on Window
 
 The `mdanalysis-rmsd-example` GitHub Actions workflow runs the same tiny example on Ubuntu and uploads the generated CSV and run record as CI artifacts. The successful run is recorded in `verified-envs.yaml` as narrow R6 evidence.
 
+The `gromacs-rmsd-smoke` workflow attempts the next evidence step for GROMACS: install GROMACS on GitHub Actions Ubuntu, run `gmx --version`, validate a smoke run record, and upload it as an artifact. Do not count this as R4 until the workflow URL is recorded in `verified-envs.yaml`.
+
 ## What This Is Not
 
 - Not a run-anywhere promise.
