@@ -24,3 +24,17 @@ def test_validate_supports_explicit_repo_root_from_other_cwd(monkeypatch, tmp_pa
         "--repo-root",
         str(ROOT),
     ]) == 0
+
+
+def test_list_command_shows_capsules(capsys) -> None:
+    assert main(["list"]) == 0
+    output = capsys.readouterr().out
+    assert "mdanalysis-rmsd" in output
+    assert "gromacs-rmsd" in output
+
+
+def test_list_command_supports_json(capsys) -> None:
+    assert main(["list", "--format", "json"]) == 0
+    output = capsys.readouterr().out
+    assert '"capsule_id": "mdanalysis-rmsd"' in output
+    assert '"declared_readiness": "R6"' in output

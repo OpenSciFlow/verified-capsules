@@ -8,6 +8,8 @@ Use this before tagging an OpenSciFlow Verified Capsules release.
 - `opensciflow-capsule validate verified-capsules/gromacs-rmsd` passes.
 - `opensciflow-capsule summary verified-capsules/mdanalysis-rmsd` matches the committed readiness claim.
 - `opensciflow-capsule summary verified-capsules/gromacs-rmsd` matches the committed readiness claim.
+- `opensciflow-capsule list` shows both included capsules with the expected readiness levels.
+- `opensciflow-capsule list --format json` is valid JSON and includes both capsule IDs.
 - GitHub Actions `validate` passes.
 - GitHub Actions `mdanalysis-rmsd-example` passes.
 - GitHub Actions `gromacs-rmsd-smoke` passes.

@@ -11,6 +11,9 @@ python -m pip install -e .
 ## Inspect The Included Capsules
 
 ```bash
+opensciflow-capsule list
+opensciflow-capsule list --format json
+
 opensciflow-capsule validate verified-capsules/mdanalysis-rmsd
 opensciflow-capsule summary verified-capsules/mdanalysis-rmsd
 

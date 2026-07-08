@@ -4,6 +4,7 @@ import argparse
 import sys
 from pathlib import Path
 
+from opensciflow_capsule.catalog import discover_capsules, print_catalog_json, print_catalog_table
 from opensciflow_capsule.smoke import run_smoke_test
 from opensciflow_capsule.summary import print_summary, summarize_verified_envs
 from opensciflow_capsule.validation import validate_capsule
@@ -55,23 +56,36 @@ def main(argv: list[str] | None = None) -> int:
     summary = subparsers.add_parser("summary", parents=[common], help="Summarize a capsule verified-env matrix.")
     summary.add_argument("capsule_dir", type=Path)
 
+    catalog = subparsers.add_parser("list", parents=[common], help="List available capsules.")
+    catalog.add_argument("--format", choices=["table", "json"], default="table")
+
     args = parser.parse_args(argv)
 
     try:
         root = resolve_repo_root(args.repo_root)
-        capsule_dir = resolve_capsule_dir(root, args.capsule_dir)
 
         if args.command == "validate":
+            capsule_dir = resolve_capsule_dir(root, args.capsule_dir)
             validate_capsule(capsule_dir, root / "schemas")
             print(f"validated capsule: {capsule_dir}")
             return 0
 
         if args.command == "smoke":
+            capsule_dir = resolve_capsule_dir(root, args.capsule_dir)
             return run_smoke_test(capsule_dir, args.smoke_test_id, args.execute)
 
         if args.command == "summary":
+            capsule_dir = resolve_capsule_dir(root, args.capsule_dir)
             counts = summarize_verified_envs(capsule_verified_envs(capsule_dir))
             print_summary(counts, sys.stdout)
+            return 0
+
+        if args.command == "list":
+            items = discover_capsules(root)
+            if args.format == "json":
+                print_catalog_json(items, sys.stdout)
+            else:
+                print_catalog_table(items, sys.stdout)
             return 0
     except SystemExit:
         raise

@@ -17,4 +17,6 @@ jobs:
       - run: opensciflow-capsule validate verified-capsules/mdanalysis-rmsd
       - run: opensciflow-capsule summary verified-capsules/gromacs-rmsd
       - run: opensciflow-capsule summary verified-capsules/mdanalysis-rmsd
+      - run: opensciflow-capsule list
+      - run: opensciflow-capsule list --format json
       - run: python -m pytest

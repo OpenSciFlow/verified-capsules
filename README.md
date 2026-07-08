@@ -63,6 +63,13 @@ opensciflow-capsule validate verified-capsules/gromacs-rmsd
 opensciflow-capsule validate verified-capsules/mdanalysis-rmsd
 ```
 
+List available capsules and their evidence matrix counts:
+
+```bash
+opensciflow-capsule list
+opensciflow-capsule list --format json
+```
+
 Summarize environment evidence:
 
 ```bash
