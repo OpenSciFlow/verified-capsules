@@ -1,10 +1,14 @@
 # Expected Outputs
 
-Expected outputs are not verified yet.
-
-For an R4 smoke test, record the minimal checks that should pass, such as:
+R4 smoke evidence should include:
 
 - `gmx --version` return code;
-- version string captured in the run log.
+- version string captured in the run log;
+- smoke run record artifact.
 
-For an R5 example run, add output-shape checks for `rmsd.xvg` and record SHA256 hashes when appropriate.
+The next R5 target should produce:
+
+- `outputs/rmsd-github-actions-ubuntu.xvg`
+- `run-records/r5-github-actions-ubuntu-gromacs-rmsd.json`
+
+The `.xvg` file is expected to contain GROMACS metadata comments and a small number of RMSD rows for the synthetic tiny input.

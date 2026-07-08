@@ -1,0 +1,47 @@
+name: gromacs-rmsd-example
+
+on:
+  push:
+    paths:
+      - ".github/workflows/gromacs-rmsd-example.yml"
+      - "scripts/**"
+      - "schemas/**"
+      - "verified-capsules/gromacs-rmsd/**"
+  pull_request:
+    paths:
+      - ".github/workflows/gromacs-rmsd-example.yml"
+      - "scripts/**"
+      - "schemas/**"
+      - "verified-capsules/gromacs-rmsd/**"
+  workflow_dispatch:
+
+jobs:
+  example-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install jsonschema pyyaml
+      - run: python scripts/opensciflow_capsule.py validate verified-capsules/gromacs-rmsd
+      - name: Install GROMACS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gromacs
+      - name: Run tiny GROMACS RMSD example
+        run: |
+          python verified-capsules/gromacs-rmsd/scripts/run_gromacs_rmsd.py \
+            --structure verified-capsules/gromacs-rmsd/test-inputs/tiny_ca_trajectory.pdb \
+            --trajectory verified-capsules/gromacs-rmsd/test-inputs/tiny_ca_trajectory.pdb \
+            --output verified-capsules/gromacs-rmsd/outputs/rmsd-github-actions-ubuntu.xvg \
+            --run-record verified-capsules/gromacs-rmsd/run-records/r5-github-actions-ubuntu-gromacs-rmsd.json \
+            --run-id r5-github-actions-ubuntu-gromacs-rmsd
+      - run: python scripts/validate_run_record.py verified-capsules/gromacs-rmsd/run-records/r5-github-actions-ubuntu-gromacs-rmsd.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gromacs-rmsd-example-github-actions-ubuntu
+          path: |
+            verified-capsules/gromacs-rmsd/outputs/rmsd-github-actions-ubuntu.xvg
+            verified-capsules/gromacs-rmsd/run-records/r5-github-actions-ubuntu-gromacs-rmsd.json

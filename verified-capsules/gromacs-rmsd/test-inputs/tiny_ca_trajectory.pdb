@@ -1,0 +1,19 @@
+MODEL        1
+ATOM      1  CA  ALA A   1       0.000   0.000   0.000  1.00  0.00           C
+ATOM      2  CA  GLY A   2       1.500   0.100   0.000  1.00  0.00           C
+ATOM      3  CA  SER A   3       2.900   0.800   0.200  1.00  0.00           C
+ATOM      4  CA  THR A   4       4.100   1.000   1.100  1.00  0.00           C
+ENDMDL
+MODEL        2
+ATOM      1  CA  ALA A   1       0.050   0.020   0.020  1.00  0.00           C
+ATOM      2  CA  GLY A   2       1.530   0.150   0.030  1.00  0.00           C
+ATOM      3  CA  SER A   3       2.940   0.830   0.250  1.00  0.00           C
+ATOM      4  CA  THR A   4       4.130   1.050   1.150  1.00  0.00           C
+ENDMDL
+MODEL        3
+ATOM      1  CA  ALA A   1       0.100   0.030   0.050  1.00  0.00           C
+ATOM      2  CA  GLY A   2       1.560   0.180   0.060  1.00  0.00           C
+ATOM      3  CA  SER A   3       2.980   0.870   0.300  1.00  0.00           C
+ATOM      4  CA  THR A   4       4.180   1.100   1.220  1.00  0.00           C
+ENDMDL
+END

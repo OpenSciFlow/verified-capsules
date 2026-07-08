@@ -13,12 +13,12 @@ tool:
 
 inputs:
   - name: "structure_or_tpr"
-    description: "GROMACS .tpr or compatible structure input."
-    format: "tpr"
+    description: "GROMACS .tpr or compatible structure input. The tiny example uses a synthetic multi-model PDB file."
+    format: "tpr/pdb"
     required: true
   - name: "trajectory"
-    description: "GROMACS trajectory file."
-    format: "xtc/trr"
+    description: "GROMACS trajectory file. The tiny example uses the same synthetic multi-model PDB file as a trajectory-like input."
+    format: "xtc/trr/pdb"
     required: true
   - name: "index_file"
     description: "Optional GROMACS index file."
@@ -55,7 +55,7 @@ environment:
 command_templates:
   - id: "gromacs-rmsd-basic"
     description: "Compute RMSD using a reviewed GROMACS command template."
-    reviewed_status: "draft"
+    reviewed_status: "reviewed"
     command: "gmx rms -s {inputs.structure_or_tpr} -f {inputs.trajectory} -o {outputs.rmsd_xvg}"
     allowed_placeholders:
       - "{inputs.structure_or_tpr}"
@@ -65,7 +65,22 @@ command_templates:
       - "{outputs.rmsd_xvg}"
     limitations:
       - "Group selection may require interactive input or a reviewed wrapper for non-default groups."
-      - "This skeleton does not yet include a tested tiny trajectory."
+      - "Direct command execution may block on interactive group selection; use the reviewed wrapper for the tiny example."
+  - id: "gromacs-rmsd-reviewed-wrapper"
+    description: "Run the tiny RMSD example through a reviewed Python wrapper that supplies fixed group selections."
+    reviewed_status: "reviewed"
+    command: "python scripts/run_gromacs_rmsd.py --structure {inputs.structure_or_tpr} --trajectory {inputs.trajectory} --output {outputs.rmsd_xvg} --run-record {outputs.run_record}"
+    allowed_placeholders:
+      - "{inputs.structure_or_tpr}"
+      - "{inputs.trajectory}"
+      - "{outputs.rmsd_xvg}"
+      - "{outputs.run_record}"
+    expected_outputs:
+      - "{outputs.rmsd_xvg}"
+      - "{outputs.run_record}"
+    limitations:
+      - "The wrapper is reviewed only for the tiny synthetic input and fixed group 0 / group 0 selection."
+      - "Use on arbitrary trajectories requires additional review."
 
 smoke_tests:
   - id: "gromacs-version-check"

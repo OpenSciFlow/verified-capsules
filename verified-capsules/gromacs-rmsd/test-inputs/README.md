@@ -1,14 +1,7 @@
 # Test Inputs
 
-No test input files are included yet.
+`tiny_ca_trajectory.pdb` is a synthetic three-frame, four-atom multi-model PDB file.
 
-To move this capsule toward R4/R5, add a tiny, redistributable GROMACS input set with:
+It is included only to verify that the GROMACS RMSD command path can execute end to end. It is not scientific simulation data.
 
-- source URL or generation script;
-- license;
-- citation;
-- file size;
-- SHA256 hashes;
-- expected runtime range.
-
-Do not add proprietary, private, or unclear-license simulation data.
+License: repository license, Apache-2.0.
