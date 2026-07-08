@@ -14,4 +14,6 @@ jobs:
           python-version: "3.11"
       - run: python -m pip install jsonschema pyyaml
       - run: python scripts/validate_capsule.py verified-capsules/gromacs-rmsd
+      - run: python scripts/validate_capsule.py verified-capsules/mdanalysis-rmsd
       - run: python scripts/summarize_verified_envs.py verified-capsules/gromacs-rmsd/verified-envs.yaml
+      - run: python scripts/summarize_verified_envs.py verified-capsules/mdanalysis-rmsd/verified-envs.yaml

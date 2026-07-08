@@ -1,0 +1,44 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "r5-local-windows-python313-mdanalysis210",
+  "capsule_id": "mdanalysis-rmsd",
+  "status": "passed",
+  "started_at": "2026-07-08T11:26:53.604664Z",
+  "finished_at": "2026-07-08T11:26:53.623355Z",
+  "command_template_id": "mdanalysis-rmsd-example",
+  "rendered_command": "verified-capsules\\mdanalysis-rmsd\\scripts\\run_mdanalysis_rmsd.py --trajectory verified-capsules\\mdanalysis-rmsd\\test-inputs\\tiny_ca_trajectory.pdb --selection name CA --output verified-capsules\\mdanalysis-rmsd\\outputs\\rmsd.csv --run-record verified-capsules\\mdanalysis-rmsd\\run-records\\r5-local-windows-python313-mdanalysis210.json --run-id r5-local-windows-python313-mdanalysis210",
+  "return_code": 0,
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.13.5",
+    "mdanalysis_version": "2.10.0",
+    "git_commit": "d2b5d37cbb1ec766e0b970f3be242cc0f61045d8",
+    "workspace_dirty_at_run": true
+  },
+  "inputs": [
+    {
+      "name": "trajectory_pdb",
+      "path": "verified-capsules/mdanalysis-rmsd/test-inputs/tiny_ca_trajectory.pdb",
+      "sha256": "3b75ab3eb78efaca10abac77c91598721a0f3842d7c5ab966e06834a11db26cb"
+    },
+    {
+      "name": "selection",
+      "value": "name CA"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "rmsd_csv",
+      "path": "verified-capsules/mdanalysis-rmsd/outputs/rmsd.csv",
+      "sha256": "bac6bc6a1a8abe9f63aea77f438288bc541b72190bb44182c9394292211b86b6",
+      "rows": 3
+    }
+  ],
+  "logs": [],
+  "hashes": [],
+  "known_failure_matches": [],
+  "limitations": [
+    "Tiny synthetic PDB input; execution evidence only.",
+    "No cross-environment verification is claimed."
+  ]
+}

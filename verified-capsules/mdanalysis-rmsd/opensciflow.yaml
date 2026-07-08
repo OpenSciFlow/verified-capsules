@@ -1,0 +1,100 @@
+schema_version: "0.1.0"
+capsule_id: "mdanalysis-rmsd"
+name: "MDAnalysis RMSD analysis capsule"
+status: "verified"
+declared_readiness: "R5"
+verification_status: "example-run-recorded"
+scope: "Compute RMSD from a small trajectory-like PDB input using MDAnalysis."
+
+tool:
+  name: "MDAnalysis"
+  upstream_url: "https://www.mdanalysis.org/"
+  version_constraint: "2.10.0 verified in the local Windows smoke/example run"
+
+inputs:
+  - name: "trajectory_pdb"
+    description: "Multi-model PDB file used as a tiny trajectory."
+    format: "pdb"
+    required: true
+  - name: "selection"
+    description: "MDAnalysis atom selection string."
+    format: "text"
+    required: true
+
+outputs:
+  - name: "rmsd_csv"
+    description: "Frame-wise RMSD output in CSV format."
+    format: "csv"
+    required: true
+  - name: "run_record"
+    description: "OpenSciFlow run record JSON."
+    format: "json"
+    required: true
+
+environment:
+  type: ["conda", "local"]
+  files:
+    - "environment.yml"
+  hardware:
+    cpu: "1 CPU core"
+    gpu: null
+    memory: "1 GB"
+    storage: "Less than 10 MB for the included tiny example"
+  runtime_checks:
+    - "python -c \"import MDAnalysis as mda; print(mda.__version__)\""
+    - "python scripts/run_mdanalysis_rmsd.py --help"
+    - "test -r {inputs.trajectory_pdb}"
+  hpc:
+    scheduler: "not required for the tiny example"
+
+command_templates:
+  - id: "mdanalysis-rmsd-example"
+    description: "Run MDAnalysis RMSD on the included tiny multi-model PDB input."
+    reviewed_status: "reviewed"
+    command: "python scripts/run_mdanalysis_rmsd.py --trajectory {inputs.trajectory_pdb} --selection {parameters.selection} --output {outputs.rmsd_csv} --run-record {outputs.run_record}"
+    allowed_placeholders:
+      - "{inputs.trajectory_pdb}"
+      - "{parameters.selection}"
+      - "{outputs.rmsd_csv}"
+      - "{outputs.run_record}"
+    expected_outputs:
+      - "{outputs.rmsd_csv}"
+      - "{outputs.run_record}"
+    limitations:
+      - "The example uses a tiny synthetic PDB trajectory for execution verification, not scientific inference."
+      - "Selections other than the reviewed example selection require review before execution claims."
+
+smoke_tests:
+  - id: "mdanalysis-import-and-help"
+    entrypoint: "scripts/smoke_test.py"
+    status: "passed"
+    checks:
+      - "MDAnalysis imports successfully."
+      - "The RMSD runner help command exits successfully."
+    expected_runtime_seconds: 10
+
+run_record_requirements:
+  - "rendered_command"
+  - "mdanalysis_version"
+  - "python_version"
+  - "input_file_hashes"
+  - "output_file_hashes"
+  - "return_code"
+  - "logs"
+  - "known_failure_matches"
+
+license:
+  capsule_license: "Apache-2.0"
+  upstream_license_status: "MDAnalysis is distributed under GPL-2.0-or-later; users must check upstream terms for their own use."
+  notes: "The included tiny PDB is synthetic and repository-local."
+
+citation:
+  required: true
+  text: "Cite MDAnalysis according to upstream citation guidance for the version used."
+  doi: null
+  url: "https://www.mdanalysis.org/pages/citations/"
+
+limitations:
+  - "This R5 evidence covers only the included tiny local Windows example run."
+  - "No cross-environment verification is claimed."
+  - "The tiny synthetic input is for execution verification, not scientific interpretation."

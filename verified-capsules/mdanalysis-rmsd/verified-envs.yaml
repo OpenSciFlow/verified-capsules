@@ -1,0 +1,25 @@
+schema_version: "0.1.0"
+capsule_id: "mdanalysis-rmsd"
+matrix:
+  - environment_id: "local-windows-python313-mdanalysis210"
+    environment_type: "local-venv"
+    os: "Windows"
+    container: null
+    scheduler: null
+    gromacs_version: null
+    cuda: null
+    status: "passed"
+    readiness_contribution: "R5"
+    evidence: "run-records/r5-local-windows-python313-mdanalysis210.json"
+    notes: "Smoke test and tiny example run passed in a local Python 3.13 venv with MDAnalysis 2.10.0."
+  - environment_id: "linux-conda-mdanalysis210"
+    environment_type: "conda"
+    os: "linux"
+    container: null
+    scheduler: null
+    gromacs_version: null
+    cuda: null
+    status: "untested"
+    readiness_contribution: null
+    evidence: null
+    notes: "Declared environment only; no run evidence yet."

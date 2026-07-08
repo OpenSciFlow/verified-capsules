@@ -33,6 +33,7 @@ A verified execution capsule should contain:
 
 | Capsule | Status | Readiness | Notes |
 |---|---|---:|---|
+| `mdanalysis-rmsd` | Example run recorded | R5 | Tiny MDAnalysis RMSD smoke/example run with output CSV and run record. No cross-environment claim. |
 | `gromacs-rmsd` | Skeleton | R3 draft target | Environment spec and reviewed command-template draft exist. No smoke-test evidence is claimed yet. |
 
 ## Readiness Boundary
@@ -50,16 +51,30 @@ Install the small validation dependencies:
 python -m pip install jsonschema pyyaml
 ```
 
-Validate all capsule skeletons:
+Validate capsule skeletons and recorded examples:
 
 ```bash
 python scripts/validate_capsule.py verified-capsules/gromacs-rmsd
+python scripts/validate_capsule.py verified-capsules/mdanalysis-rmsd
 ```
 
 Summarize environment evidence:
 
 ```bash
 python scripts/summarize_verified_envs.py verified-capsules/gromacs-rmsd/verified-envs.yaml
+python scripts/summarize_verified_envs.py verified-capsules/mdanalysis-rmsd/verified-envs.yaml
+```
+
+Run the MDAnalysis R5 example in a prepared environment:
+
+```bash
+python verified-capsules/mdanalysis-rmsd/scripts/smoke_test.py
+python verified-capsules/mdanalysis-rmsd/scripts/run_mdanalysis_rmsd.py \
+  --trajectory verified-capsules/mdanalysis-rmsd/test-inputs/tiny_ca_trajectory.pdb \
+  --selection "name CA" \
+  --output verified-capsules/mdanalysis-rmsd/outputs/rmsd.csv \
+  --run-record verified-capsules/mdanalysis-rmsd/run-records/r5-local-windows-python313-mdanalysis210.json \
+  --run-id r5-local-windows-python313-mdanalysis210
 ```
 
 ## What This Is Not

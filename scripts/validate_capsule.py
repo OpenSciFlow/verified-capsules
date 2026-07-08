@@ -52,9 +52,6 @@ def require_path(path: Path) -> None:
 def validate_capsule(capsule_dir: Path) -> None:
     require_path(capsule_dir)
     require_path(capsule_dir / "opensciflow.yaml")
-    require_path(capsule_dir / "environment.yml")
-    require_path(capsule_dir / "apptainer.def")
-    require_path(capsule_dir / "smoke-test.sh")
     require_path(capsule_dir / "test-inputs")
     require_path(capsule_dir / "expected-outputs")
     require_path(capsule_dir / "run-records")
@@ -63,6 +60,12 @@ def validate_capsule(capsule_dir: Path) -> None:
 
     manifest = load_yaml(capsule_dir / "opensciflow.yaml")
     validate_with_schema(manifest, "manifest.schema.json")
+
+    for env_file in manifest.get("environment", {}).get("files", []):
+        require_path(capsule_dir / env_file)
+
+    for smoke_test in manifest.get("smoke_tests", []):
+        require_path(capsule_dir / smoke_test["entrypoint"])
 
     verified_envs = load_yaml(capsule_dir / "verified-envs.yaml")
     validate_with_schema(verified_envs, "verified-envs.schema.json")
