@@ -4,12 +4,16 @@ on:
   push:
     paths:
       - ".github/workflows/mdanalysis-rmsd-example.yml"
+      - "pyproject.toml"
+      - "opensciflow_capsule/**"
       - "scripts/**"
       - "schemas/**"
       - "verified-capsules/mdanalysis-rmsd/**"
   pull_request:
     paths:
       - ".github/workflows/mdanalysis-rmsd-example.yml"
+      - "pyproject.toml"
+      - "opensciflow_capsule/**"
       - "scripts/**"
       - "schemas/**"
       - "verified-capsules/mdanalysis-rmsd/**"
@@ -24,9 +28,9 @@ jobs:
         with:
           python-version: "3.13"
       - run: python -m pip install --upgrade pip
-      - run: python -m pip install "MDAnalysis==2.10.0" pyyaml jsonschema
-      - run: python scripts/opensciflow_capsule.py validate verified-capsules/mdanalysis-rmsd
-      - run: python scripts/opensciflow_capsule.py smoke verified-capsules/mdanalysis-rmsd --execute
+      - run: python -m pip install -e . "MDAnalysis==2.10.0"
+      - run: opensciflow-capsule validate verified-capsules/mdanalysis-rmsd
+      - run: opensciflow-capsule smoke verified-capsules/mdanalysis-rmsd --execute
       - name: Run tiny RMSD example
         run: |
           python verified-capsules/mdanalysis-rmsd/scripts/run_mdanalysis_rmsd.py \
