@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensciflow.org/schemas/verified-envs-v0.1.schema.json",
+  "title": "OpenSciFlow Verified Environment Matrix v0.1",
+  "type": "object",
+  "required": ["schema_version", "capsule_id", "matrix"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "capsule_id": { "type": "string" },
+    "matrix": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["environment_id", "environment_type", "status"],
+        "properties": {
+          "environment_id": { "type": "string" },
+          "environment_type": { "type": "string" },
+          "os": { "type": ["string", "null"] },
+          "container": { "type": ["string", "null"] },
+          "scheduler": { "type": ["string", "null"] },
+          "gromacs_version": { "type": ["string", "null"] },
+          "cuda": { "type": ["string", "null"] },
+          "status": {
+            "type": "string",
+            "enum": ["passed", "failed", "blocked", "untested"]
+          },
+          "readiness_contribution": {
+            "type": ["string", "null"],
+            "enum": ["R4", "R5", "R6", "R7", null]
+          },
+          "evidence": { "type": ["string", "null"] },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

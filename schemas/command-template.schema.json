@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensciflow.org/schemas/command-template-v0.1.schema.json",
+  "title": "OpenSciFlow Command Template v0.1",
+  "type": "object",
+  "required": ["id", "description", "command", "reviewed_status", "allowed_placeholders"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+    "description": { "type": "string" },
+    "command": { "type": "string", "minLength": 1 },
+    "reviewed_status": {
+      "type": "string",
+      "enum": ["draft", "reviewed"]
+    },
+    "allowed_placeholders": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "expected_outputs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

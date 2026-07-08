@@ -1,0 +1,25 @@
+schema_version: "0.1.0"
+capsule_id: "gromacs-rmsd"
+matrix:
+  - environment_id: "local-conda-linux-gromacs-2024"
+    environment_type: "local-conda"
+    os: "linux"
+    container: null
+    scheduler: null
+    gromacs_version: "2024.x"
+    cuda: null
+    status: "untested"
+    readiness_contribution: null
+    evidence: null
+    notes: "Skeleton row only. No smoke test has been run."
+  - environment_id: "apptainer-linux-gromacs-2024"
+    environment_type: "apptainer"
+    os: "linux"
+    container: "apptainer.def"
+    scheduler: null
+    gromacs_version: "2024.x"
+    cuda: null
+    status: "untested"
+    readiness_contribution: null
+    evidence: null
+    notes: "Container definition exists, but no build or smoke-test record is included."

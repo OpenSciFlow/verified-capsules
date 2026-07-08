@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensciflow.org/schemas/verified-capsule-manifest-v0.1.schema.json",
+  "title": "OpenSciFlow Verified Capsule Manifest v0.1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "capsule_id",
+    "name",
+    "status",
+    "declared_readiness",
+    "verification_status",
+    "tool",
+    "inputs",
+    "outputs",
+    "environment",
+    "command_templates",
+    "smoke_tests",
+    "license",
+    "citation",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "capsule_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["skeleton", "draft", "review", "verified", "deprecated"]
+    },
+    "declared_readiness": {
+      "type": "string",
+      "enum": ["R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7"]
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["unverified-skeleton", "schema-validated", "smoke-tested", "example-run-recorded", "multi-env-verified", "externally-reproduced"]
+    },
+    "scope": { "type": "string" },
+    "tool": {
+      "type": "object",
+      "required": ["name", "upstream_url"],
+      "properties": {
+        "name": { "type": "string" },
+        "upstream_url": { "type": "string" },
+        "version_constraint": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/named_io" }
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/named_io" }
+    },
+    "environment": { "$ref": "environment-spec.schema.json" },
+    "command_templates": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "command-template.schema.json" }
+    },
+    "smoke_tests": {
+      "type": "array",
+      "items": { "$ref": "smoke-test.schema.json" }
+    },
+    "run_record_requirements": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "license": {
+      "type": "object",
+      "required": ["capsule_license", "upstream_license_status"],
+      "properties": {
+        "capsule_license": { "type": "string" },
+        "upstream_license_status": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "citation": {
+      "type": "object",
+      "required": ["required"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "text": { "type": "string" },
+        "doi": { "type": ["string", "null"] },
+        "url": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "named_io": {
+      "type": "object",
+      "required": ["name", "description"],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "format": { "type": "string" },
+        "required": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

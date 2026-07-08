@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensciflow.org/schemas/run-record-v0.1.schema.json",
+  "title": "OpenSciFlow Run Record v0.1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "run_id",
+    "capsule_id",
+    "status",
+    "started_at",
+    "finished_at",
+    "command_template_id",
+    "rendered_command",
+    "environment",
+    "inputs",
+    "outputs",
+    "return_code"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "run_id": { "type": "string" },
+    "capsule_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["passed", "failed", "blocked", "aborted"]
+    },
+    "started_at": { "type": "string" },
+    "finished_at": { "type": ["string", "null"] },
+    "command_template_id": { "type": "string" },
+    "rendered_command": { "type": "string" },
+    "environment": { "type": "object" },
+    "inputs": { "type": "array" },
+    "outputs": { "type": "array" },
+    "return_code": { "type": ["integer", "null"] },
+    "logs": { "type": "array" },
+    "hashes": { "type": "array" },
+    "known_failure_matches": { "type": "array" },
+    "limitations": { "type": "array" }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,83 @@
+# OpenSciFlow Verified Capsules
+
+**Verified Capsules is an early OpenSciFlow repository for execution-facing evidence packages for AI for Science tools.**
+
+It does not promise that scientific tools will run everywhere. A capsule records what a tool requires, what has been checked, where it has passed or failed, and what must be written after execution.
+
+Core principle:
+
+> OpenSciFlow does not eliminate scientific computing failures. It makes them explicit, checkable, diagnosable, and recordable.
+
+## What This Repository Contains
+
+- `verified-capsules/`: capsule examples and drafts.
+- `schemas/`: JSON Schemas for manifests, environment specs, command templates, smoke tests, run records, verified environments, known failures, and capsule metadata.
+- `scripts/`: local validation helpers.
+- `docs/`: design notes for capsule structure, safety, readiness, and agent integration.
+
+## What A Capsule Contains
+
+A verified execution capsule should contain:
+
+- `opensciflow.yaml`: manifest for one tool task.
+- `environment.yml`, `apptainer.def`, or equivalent environment spec.
+- Reviewed command templates.
+- `smoke-test.sh` or another minimal smoke-test entrypoint.
+- `test-inputs/`: small inputs or instructions for obtaining them.
+- `expected-outputs/`: minimal expected outputs or shape checks.
+- `run-records/`: real execution records when available.
+- `verified-envs.yaml`: environment matrix recording pass, fail, blocked, or untested status.
+- `known-failures.md`: known or anticipated failure modes.
+
+## Current Capsules
+
+| Capsule | Status | Readiness | Notes |
+|---|---|---:|---|
+| `gromacs-rmsd` | Skeleton | R3 draft target | Environment spec and reviewed command-template draft exist. No smoke-test evidence is claimed yet. |
+
+## Readiness Boundary
+
+- R1/R2 artifacts can only reduce documentation inspection cost.
+- R3 artifacts expose environment assumptions and reviewed command templates.
+- R4/R5 artifacts may cautiously reduce setup trial-and-error in the verified environment.
+- R6/R7 artifacts are needed before making bounded cross-environment migration claims.
+
+## Validate Locally
+
+Install the small validation dependencies:
+
+```bash
+python -m pip install jsonschema pyyaml
+```
+
+Validate all capsule skeletons:
+
+```bash
+python scripts/validate_capsule.py verified-capsules/gromacs-rmsd
+```
+
+Summarize environment evidence:
+
+```bash
+python scripts/summarize_verified_envs.py verified-capsules/gromacs-rmsd/verified-envs.yaml
+```
+
+## What This Is Not
+
+- Not a run-anywhere promise.
+- Not a replacement for Conda, Docker, Apptainer, Slurm, Nextflow, Snakemake, or package managers.
+- Not a README replacement.
+- Not a scientific truth or clinical decision system.
+- Not a claim that listed tools are partners or officially associated with OpenSciFlow.
+
+## Contribution Focus
+
+Good first contributions:
+
+- Correct a capsule field.
+- Add a missing environment requirement.
+- Add a known failure case.
+- Provide smoke-test evidence.
+- Add a failed run record with useful diagnostics.
+- Review command-template safety.
+- Add license or citation metadata.

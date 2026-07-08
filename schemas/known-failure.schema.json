@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensciflow.org/schemas/known-failure-v0.1.schema.json",
+  "title": "OpenSciFlow Known Failure v0.1",
+  "type": "object",
+  "required": ["id", "category", "symptom", "agent_action"],
+  "properties": {
+    "id": { "type": "string" },
+    "category": {
+      "type": "string",
+      "enum": ["environment", "input", "permission", "model-weight", "hpc", "license", "citation", "tool-bug", "unknown"]
+    },
+    "symptom": { "type": "string" },
+    "likely_cause": { "type": "string" },
+    "agent_action": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["observed", "anticipated", "resolved", "unknown"]
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensciflow.org/schemas/smoke-test-v0.1.schema.json",
+  "title": "OpenSciFlow Smoke Test v0.1",
+  "type": "object",
+  "required": ["id", "entrypoint", "status", "checks"],
+  "properties": {
+    "id": { "type": "string" },
+    "entrypoint": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "available", "passed", "failed", "blocked"]
+    },
+    "checks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "expected_runtime_seconds": { "type": "number" }
+  },
+  "additionalProperties": true
+}

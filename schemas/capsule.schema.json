@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opensciflow.org/schemas/capsule-v0.1.schema.json",
+  "title": "OpenSciFlow Capsule Directory v0.1",
+  "type": "object",
+  "required": [
+    "capsule_id",
+    "manifest",
+    "environment_files",
+    "smoke_test",
+    "test_inputs",
+    "expected_outputs",
+    "run_records",
+    "verified_envs",
+    "known_failures"
+  ],
+  "properties": {
+    "capsule_id": { "type": "string" },
+    "manifest": { "type": "string" },
+    "environment_files": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "smoke_test": { "type": "string" },
+    "test_inputs": { "type": "string" },
+    "expected_outputs": { "type": "string" },
+    "run_records": { "type": "string" },
+    "verified_envs": { "type": "string" },
+    "known_failures": { "type": "string" }
+  },
+  "additionalProperties": true
+}

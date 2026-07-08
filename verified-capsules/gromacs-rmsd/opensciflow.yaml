@@ -1,0 +1,103 @@
+schema_version: "0.1.0"
+capsule_id: "gromacs-rmsd"
+name: "GROMACS RMSD analysis capsule"
+status: "skeleton"
+declared_readiness: "R3"
+verification_status: "unverified-skeleton"
+scope: "Compute RMSD from a prepared GROMACS structure/run-input file and trajectory."
+
+tool:
+  name: "GROMACS"
+  upstream_url: "https://www.gromacs.org/"
+  version_constraint: "2024.x preferred; not verified by this skeleton"
+
+inputs:
+  - name: "structure_or_tpr"
+    description: "GROMACS .tpr or compatible structure input."
+    format: "tpr"
+    required: true
+  - name: "trajectory"
+    description: "GROMACS trajectory file."
+    format: "xtc/trr"
+    required: true
+  - name: "index_file"
+    description: "Optional GROMACS index file."
+    format: "ndx"
+    required: false
+
+outputs:
+  - name: "rmsd_xvg"
+    description: "RMSD output in XVG format."
+    format: "xvg"
+    required: true
+  - name: "run_record"
+    description: "OpenSciFlow run record JSON."
+    format: "json"
+    required: true
+
+environment:
+  type: ["conda", "apptainer", "local"]
+  files:
+    - "environment.yml"
+    - "apptainer.def"
+  hardware:
+    cpu: "1+ CPU cores"
+    gpu: null
+    memory: "2 GB+ for tiny smoke inputs; real trajectories may require more"
+    storage: "Enough for trajectory, outputs, and logs"
+  runtime_checks:
+    - "gmx --version"
+    - "test -r {inputs.structure_or_tpr}"
+    - "test -r {inputs.trajectory}"
+  hpc:
+    scheduler: "slurm optional; no site-specific parameters are declared in this skeleton"
+
+command_templates:
+  - id: "gromacs-rmsd-basic"
+    description: "Compute RMSD using a reviewed GROMACS command template."
+    reviewed_status: "draft"
+    command: "gmx rms -s {inputs.structure_or_tpr} -f {inputs.trajectory} -o {outputs.rmsd_xvg}"
+    allowed_placeholders:
+      - "{inputs.structure_or_tpr}"
+      - "{inputs.trajectory}"
+      - "{outputs.rmsd_xvg}"
+    expected_outputs:
+      - "{outputs.rmsd_xvg}"
+    limitations:
+      - "Group selection may require interactive input or a reviewed wrapper for non-default groups."
+      - "This skeleton does not yet include a tested tiny trajectory."
+
+smoke_tests:
+  - id: "gromacs-version-check"
+    entrypoint: "smoke-test.sh"
+    status: "draft"
+    checks:
+      - "GROMACS executable is available."
+      - "gmx --version exits with status 0."
+    expected_runtime_seconds: 10
+
+run_record_requirements:
+  - "rendered_command"
+  - "gromacs_version"
+  - "input_file_hashes"
+  - "output_file_hashes"
+  - "return_code"
+  - "logs"
+  - "known_failure_matches"
+
+license:
+  capsule_license: "Apache-2.0"
+  upstream_license_status: "GROMACS license must be checked from upstream for the exact version used."
+  notes: "This capsule does not redistribute GROMACS binaries or sample trajectories."
+
+citation:
+  required: true
+  text: "Cite GROMACS according to the upstream citation guidance for the version used."
+  doi: null
+  url: "https://www.gromacs.org/"
+
+limitations:
+  - "This is a skeleton capsule, not a verified GROMACS installation."
+  - "No smoke-test evidence is claimed yet."
+  - "No example RMSD run record is included yet."
+  - "No cross-environment portability claim is made."

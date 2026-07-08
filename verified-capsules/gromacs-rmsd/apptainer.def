@@ -1,0 +1,13 @@
+Bootstrap: docker
+From: condaforge/mambaforge:latest
+
+%post
+    mamba install -y -c conda-forge python=3.11 gromacs=2024.* pyyaml
+    mamba clean -a -y
+
+%runscript
+    exec gmx "$@"
+
+%labels
+    org.opensciflow.capsule gromacs-rmsd
+    org.opensciflow.status unverified-skeleton
