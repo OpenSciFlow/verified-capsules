@@ -19,6 +19,8 @@ Start here:
 
 - `docs/product-quickstart.md`
 - `docs/release-checklist.md`
+- `docs/v0.1-alpha-boundary.md`
+- `CHANGELOG.md`
 
 ## What A Capsule Contains
 
