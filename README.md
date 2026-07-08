@@ -87,6 +87,8 @@ python verified-capsules/mdanalysis-rmsd/scripts/run_mdanalysis_rmsd.py \
 
 The same tiny example has also been rerun in a local Conda environment on Windows and recorded as `r5-local-windows-conda-python313-mdanalysis210.json`. This is useful replication evidence, but it is not R6.
 
+The `mdanalysis-rmsd-example` GitHub Actions workflow runs the same tiny example on Ubuntu and uploads the generated CSV and run record as CI artifacts. Do not count that as R6 until the workflow run URL is recorded in `verified-envs.yaml`.
+
 ## What This Is Not
 
 - Not a run-anywhere promise.

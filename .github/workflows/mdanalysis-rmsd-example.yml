@@ -1,0 +1,44 @@
+name: mdanalysis-rmsd-example
+
+on:
+  push:
+    paths:
+      - ".github/workflows/mdanalysis-rmsd-example.yml"
+      - "scripts/**"
+      - "schemas/**"
+      - "verified-capsules/mdanalysis-rmsd/**"
+  pull_request:
+    paths:
+      - ".github/workflows/mdanalysis-rmsd-example.yml"
+      - "scripts/**"
+      - "schemas/**"
+      - "verified-capsules/mdanalysis-rmsd/**"
+  workflow_dispatch:
+
+jobs:
+  example-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install "MDAnalysis==2.10.0" pyyaml jsonschema
+      - run: python scripts/opensciflow_capsule.py validate verified-capsules/mdanalysis-rmsd
+      - run: python scripts/opensciflow_capsule.py smoke verified-capsules/mdanalysis-rmsd --execute
+      - name: Run tiny RMSD example
+        run: |
+          python verified-capsules/mdanalysis-rmsd/scripts/run_mdanalysis_rmsd.py \
+            --trajectory verified-capsules/mdanalysis-rmsd/test-inputs/tiny_ca_trajectory.pdb \
+            --selection "name CA" \
+            --output verified-capsules/mdanalysis-rmsd/outputs/rmsd-github-actions-ubuntu.csv \
+            --run-record verified-capsules/mdanalysis-rmsd/run-records/r5-github-actions-ubuntu-python313-mdanalysis210.json \
+            --run-id r5-github-actions-ubuntu-python313-mdanalysis210
+      - run: python scripts/validate_run_record.py verified-capsules/mdanalysis-rmsd/run-records/r5-github-actions-ubuntu-python313-mdanalysis210.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mdanalysis-rmsd-github-actions-ubuntu
+          path: |
+            verified-capsules/mdanalysis-rmsd/outputs/rmsd-github-actions-ubuntu.csv
+            verified-capsules/mdanalysis-rmsd/run-records/r5-github-actions-ubuntu-python313-mdanalysis210.json
